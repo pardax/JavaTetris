@@ -1,0 +1,98 @@
+package game_Utility;
+
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+import game_Interface.Game_Screen;
+import game_Object.Game_FieldBlock;
+
+public class Game_BlockManager{
+	
+	public static final int BLOCK_X_INTERVAL = 30;
+	public static final int BLOCK_Y_INTERVAL = 30;
+	public static final int BLOCK_W_SCALE = 30;
+	public static final int BLOCK_H_SCALE = 30;
+
+	private final int MARGIN_TOP = 25;
+	private final int MARGIN_LEFT = 50;
+	
+	private Game_FieldBlock blockField[][];
+	private Game_BlockControl blockControl;
+	private Game_Screen screen;
+	
+	private int blockPosRow = 0, blockPosColumn = 4;
+	
+	//테트리스 미노 종류
+	private int minoSpecies = 0;
+	//테트리스 미노 상태
+	private int minoState = 0;
+	
+	public Game_BlockManager(Game_Screen sc) {
+		System.out.println("BlockManager running");
+		this.screen = sc;
+		blockField = new Game_FieldBlock[20][10];
+		setField();
+		
+		blockControl = new Game_BlockControl(blockField);
+		
+//		testField();
+//		testFillBlock();
+	}
+	
+	//스크린으로부터 실행 될 내용
+	public void update() {
+		//블록 착지 확인
+		if(blockControl.blockLanding()) {
+			//블록 낙하
+			blockControl.blockCycle();
+		}else {
+			System.out.println("block is landed");
+			screenTimerStop();
+		}
+	}
+	
+	//블록 필드 초기화
+	public void setField() {
+		//행 배열 필드블록 설정
+		for(int i = 0; i < blockField.length; i++) {
+			//열 배열 필드블록 설정
+			for(int j = 0; j < blockField[i].length; j++) {
+				blockField[i][j] = new Game_FieldBlock(
+						(MARGIN_LEFT+(j*BLOCK_X_INTERVAL))
+						, (MARGIN_TOP+(i*BLOCK_Y_INTERVAL))
+					);
+			}
+		}
+	}
+
+	public void drawFieldRect(Graphics g) {
+		for(int i = 0; i < blockField.length; i++) {
+			for(int j = 0; j < blockField[i].length; j++) {
+				blockField[i][j].drawRect(g);
+			}
+		}
+	}
+	
+	public Rectangle getBound() {
+		return null;
+	}
+	
+	//배열 테스트..
+	public void testField() { 
+		for(int i = 0; i < blockField.length; i++) {
+			System.out.println((i+1) + "행");
+			for(int j = 0; j < blockField[i].length; j++) {
+				blockField[i][j].test_printPos();
+			}
+		}
+	}
+	
+	public Game_BlockControl sendControl() {
+		return blockControl;
+	}
+	
+	public void screenTimerStop() {
+		screen.stopBlockDrop();
+	}
+	
+}

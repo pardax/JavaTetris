@@ -1,0 +1,35 @@
+package game_Utility;
+
+import game_Object.Game_FieldBlock;
+
+public class Game_CheckSensing {
+	
+	Game_FieldBlock[][] field;
+	int[][][] blackList;
+	int[] posR, posC;
+	
+	public Game_CheckSensing() {
+		setBlackList();
+	}
+	
+	public boolean checkLanding(int speices, int modeState) {
+		
+		return true;
+	}
+	public void checkRightSide() {
+		
+	}
+	public void checkLeftSide() {
+		
+	}
+	
+	public void setInstance(int[] r, int[] c, Game_FieldBlock[][] field) {
+		this.field = field;
+		this.posR = r;
+		this.posC = c;
+	}
+	
+	public void setBlackList() {
+		
+	}
+}

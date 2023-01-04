@@ -1,0 +1,90 @@
+package game_Object;
+
+import static game_Utility.Game_BlockManager.BLOCK_H_SCALE;
+import static game_Utility.Game_BlockManager.BLOCK_W_SCALE;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+
+public class Game_FieldBlock extends Game_Block_Abs{
+	
+	private int posX, posY;
+	private Rectangle rect;
+	private BufferedImage blockImg = null;
+	private boolean blockActivating = false;
+	private int blockID = 0;
+	
+	
+	public Game_FieldBlock(int x, int y) {
+		rect = new Rectangle();
+		posX = x;
+		posY = y;
+		
+		//블록을 채우기 위한 좌표 값
+		rect.width = posX;
+		rect.height = posY;
+		rect.width = BLOCK_W_SCALE;
+		rect.height = BLOCK_H_SCALE;
+	}
+	
+	@Override
+	public void update() {
+		
+	}
+	
+	@Override
+	public Rectangle getBound() {
+		return rect; 
+	}
+	
+	@Override
+	public void drawRect(Graphics g) {
+		//이 소스를 통하여 블럭의 깜빡임을 구현
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(posX+2, posY+2, BLOCK_W_SCALE-3, BLOCK_H_SCALE-3);
+		g.drawRect(posX, posY, BLOCK_W_SCALE, BLOCK_H_SCALE);
+		if(blockActivating) {
+			g.drawImage(blockImg, posX+2, posY+2, null);
+		}
+	}
+
+	@Override
+	public void setBlockState(BufferedImage color, int id) {
+		this.blockActivating = true;
+		this.blockImg = color;
+		this.blockID = id;
+	}
+	
+	@Override
+	public void clearBlock() {
+		this.blockActivating = false;
+		this.blockImg = null;
+		this.blockID = 0;
+	}
+	
+	
+	@Override
+	public boolean getBlockState() {
+		return this.blockActivating;
+	}
+	
+	public void test_printPos() {
+		System.out.print("X : " + posX + " | " + "Y : " + posY);
+		System.out.println();
+	}
+
+	@Override
+	public void setBlockColor(BufferedImage blockImg) {
+		this.blockImg = blockImg;
+	}
+
+	@Override
+	public int getBlockID() {
+		return blockID;
+	}
+
+
+	
+}

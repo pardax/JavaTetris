@@ -1,0 +1,56 @@
+package game_Interface;
+
+import java.awt.Graphics;
+
+import java.awt.event.*;
+import java.util.TimerTask;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+import game_Utility.Game_BlockManager;
+import game_Utility.Game_KeyManager;
+import game_Utility.Game_TimerListener;
+
+public class Game_Screen extends JPanel{
+	
+	private Game_BlockManager blockManager;
+//	private ActionListener timerAction;
+	private Timer timer;
+	
+	private int timerspeed = 10;
+	
+	public Game_Screen() {
+		System.out.println("GameScreen running");
+		blockManager = new Game_BlockManager();
+		timerAction = new Game_TimerListener();
+		timer = new Timer(10, timerAction); 
+		
+		
+//		addKeyListener(new Game_KeyManager());
+		
+//		timer.start();
+		
+		//Game loop
+		while(true) {
+			update();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	public void update() {
+		System.out.println("»Æ¿Œ");
+	}
+	
+	public void paint(Graphics g) {
+		blockManager.drawFieldRect(g);
+	}
+	
+}

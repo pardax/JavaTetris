@@ -1,0 +1,45 @@
+package game_Interface;
+
+import java.awt.Graphics;
+
+import java.awt.event.*;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+import game_Utility.Game_BlockManager;
+import game_Utility.Game_KeyManager;
+import game_Utility.Game_TimerListener;
+
+public class Game_Screen extends JPanel{
+	
+	private Game_BlockManager blockManager;
+	
+	private int timerspeed = 10;
+	
+	public Game_Screen() {
+		System.out.println("GameScreen running");
+		blockManager = new Game_BlockManager();
+		
+		setFocusable(true);
+		addKeyListener(new Game_KeyManager());
+		System.out.println("이것");
+		
+		//Game loop
+//		new Timer(100, new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//			}
+//		}).start();
+		
+	}
+	
+	public void update() {
+		System.out.println("확인");
+	}
+	
+	public void paint(Graphics g) {
+		blockManager.drawFieldRect(g);
+	}
+	
+}
